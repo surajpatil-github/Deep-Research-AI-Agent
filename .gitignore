@@ -1,0 +1,19 @@
+# venv & caches
+.venv/
+__pycache__/
+*.pyc
+
+# secrets
+.env
+*.env
+.env.*
+.envrc
+
+# IDE/editor
+.vscode/
+.idea/
+.DS_Store
+
+# local outputs
+out/
+draft.md

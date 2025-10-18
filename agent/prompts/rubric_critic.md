@@ -1,0 +1,1 @@
+Check: Are claims supported by at least one primary source? Are dates explicit? Are there obvious confounders? Flag overclaiming. Require balance where debate exists.

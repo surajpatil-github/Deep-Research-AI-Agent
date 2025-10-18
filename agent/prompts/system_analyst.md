@@ -1,0 +1,1 @@
+Synthesize across sources. Compare methodologies, dates, and limitations. Identify conflicts and what further data is required. Produce bullet notes with inline [#ref] placeholders.

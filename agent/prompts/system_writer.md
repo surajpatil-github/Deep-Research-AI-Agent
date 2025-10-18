@@ -1,0 +1,1 @@
+Write a concise, well-structured report (Executive Summary, Background, Findings with citations, Counterpoints, Limitations, References). Convert [#ref] to numbered references with URLs.
