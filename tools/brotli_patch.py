@@ -1,5 +1,4 @@
-# tools/brotli_patch.py
-# Make brotlicffi act as the 'brotli' package for libs that import 'brotli'
+
 try:
     import brotlicffi as _brotli
     import sys

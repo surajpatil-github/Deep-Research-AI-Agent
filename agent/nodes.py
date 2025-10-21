@@ -5,9 +5,12 @@ from typing import Any, Dict, List
 from dotenv import load_dotenv, find_dotenv
 from tools.search import web_search as real_search
 from tools.scrape import scrape as real_scrape
-from tools.llm import LLM  # ✅ keep a single, consistent import path
+from tools.llm import LLM  
 
-# Load environment from project .env (do not override existing env)
+
+
+
+
 load_dotenv(find_dotenv(), override=False)
 
 
@@ -62,7 +65,7 @@ def web_search(state: dict) -> dict:
         if i > 12:
             break
 
-    # If domain-dedupe killed everything, fall back to first few raw results
+   
     if not normalized:
         print("[web_search] domain dedupe produced 0; falling back to first results")
         j = 1
@@ -86,14 +89,14 @@ def web_search(state: dict) -> dict:
 
 import math
 
-MIN_CHARS = 300           # ↓ was 800; too strict for abstracts/landing pages
+MIN_CHARS = 300          
 MAX_DOCS = 10
 MAX_TEXT_PER_DOC = 10000
 
 def _safe_scrape(url: str) -> Dict[str, str]:
     try:
-        # remove timeout kwarg if your scraper doesn't support it
-        page = real_scrape(url, timeout=20)  # type: ignore
+       
+        page = real_scrape(url, timeout=20)  
         if not isinstance(page, dict):
             print(f"[browse] scrape non-dict for {url}")
             return {}
@@ -103,7 +106,7 @@ def _safe_scrape(url: str) -> Dict[str, str]:
             return {}
         if len(text) < MIN_CHARS:
             print(f"[browse] thin page ({len(text)} chars) for {url}")
-            # still return it; we'll use it rather than discard
+           
         return {
             "url": (page.get("url") or url).strip(),
             "title": (page.get("title") or url).strip(),
@@ -128,11 +131,11 @@ def browse(state: Dict) -> Dict:
         page = _safe_scrape(url)
 
         if page:
-            # Use scraped page; if it's thin but has some text, still keep it
+            
             page["snippet"] = snippet
             docs.append(page)
         else:
-            # 🔁 Fallback: if scrape failed, build a doc from the search snippet
+           
             if snippet:
                 print(f"[browse] using snippet fallback for {url}")
                 docs.append({
@@ -157,7 +160,7 @@ def _chunks(s: str, size: int = 1200, max_chunks: int = 6):
     return out
 
 def write(state: Dict) -> Dict:
-    llm = LLM(temperature=0.2, max_tokens=700)  # be crisp, reduce rambling
+    llm = LLM(temperature=0.2, max_tokens=700)  
     q = state["query"]
     docs: List[Dict] = state.get("docs", [])
 
@@ -168,7 +171,7 @@ def write(state: Dict) -> Dict:
         )
         return state
 
-    # Build references + map ids
+   
     refs, seen = [], {}
     for idx, d in enumerate(docs, start=1):
         url = (d.get("url") or "").strip()
@@ -178,7 +181,7 @@ def write(state: Dict) -> Dict:
         seen[url] = idx
         refs.append(f"[{idx}] {title} — {url}")
 
-    # Compose contextual snippets from top docs (chunked)
+   
     context_blocks = []
     for d in docs[:5]:
         title = d.get("title") or d.get("url")
