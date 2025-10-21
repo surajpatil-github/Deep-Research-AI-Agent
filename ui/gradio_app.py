@@ -1,6 +1,11 @@
 # ui/gradio_app.py
+ 
+
 from __future__ import annotations
 
+from tools.brotli_patch import *   
+
+from tools.env_bootstrap import *  
 import gradio as gr
 from dotenv import load_dotenv
 

@@ -1,4 +1,7 @@
 # cli.py
+
+from tools.env_bootstrap import *  
+
 import argparse, sys, traceback
 from pathlib import Path
 

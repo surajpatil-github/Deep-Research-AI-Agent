@@ -32,14 +32,14 @@ class LLM:
             os.getenv("MAX_TOKENS", "2000") if max_tokens is None else max_tokens
         )
 
-    def chat(self, system: str, user: str) -> str:
+    def chat(self, system: str, user: str) -> str: 
         resp = self.client.chat.completions.create(
-            model=self.model,
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-            messages=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
-        )
+             model=self.model, 
+             temperature=self.temperature, 
+             max_tokens=self.max_tokens,
+               messages=[ 
+                   {"role": "system", "content": system}, 
+                   {"role": "user", "content": user},
+                     ],
+                ) 
         return (resp.choices[0].message.content or "").strip()

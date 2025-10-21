@@ -1,5 +1,8 @@
 # app.py
+  
 from __future__ import annotations
+
+from tools.env_bootstrap import *  
 
 import sys
 from dotenv import load_dotenv

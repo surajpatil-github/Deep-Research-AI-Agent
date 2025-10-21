@@ -1,10 +1,7 @@
 # tools/scrape.py
 from __future__ import annotations
-
-import re
-import time
+import re, time
 from typing import Dict, Optional
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,10 +12,8 @@ HEADERS = {
     )
 }
 
-
 def _clean(txt: str) -> str:
     return re.sub(r"\s+", " ", (txt or "").strip())
-
 
 def fetch_html(url: str, timeout: int = 20) -> str:
     last: Optional[Exception] = None
@@ -27,14 +22,13 @@ def fetch_html(url: str, timeout: int = 20) -> str:
             r = requests.get(url, headers=HEADERS, timeout=timeout)
             r.raise_for_status()
             return r.text
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             last = e
             time.sleep(0.8)
     raise RuntimeError(f"Failed to fetch {url}: {last}")
 
-
-def scrape(url: str) -> Dict[str, str]:
-    html = fetch_html(url)
+def scrape(url: str, timeout: int = 20) -> Dict[str, str]:   # ← accept timeout
+    html = fetch_html(url, timeout=timeout)                   # ← pass through
     soup = BeautifulSoup(html, "lxml")
 
     main = soup.find("main") or soup.body or soup
